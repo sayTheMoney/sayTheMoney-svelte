@@ -10,7 +10,7 @@
 
     <nav class="nav">
         <Tooltip tooltip="Github" position="left">
-            <a href="https://github.com/sayTheMoney/sayTheMoney">
+            <a href="https://github.com/sayTheMoney/sayTheMoney-svelte">
                 <Icon
                     icon="github-outline"
                     animationType="pulse"
