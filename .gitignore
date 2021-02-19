@@ -1,0 +1,9 @@
+/node_modules/
+/public/build/
+/coverage/
+
+.DS_Store
+
+.vscode/
+.nyc_output/
+yarn-error.log
