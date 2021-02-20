@@ -2,9 +2,7 @@
     import * as eva from "eva-icons";
     import { afterUpdate } from "svelte";
 
-    type Animationtype = "zoom" | "pulse" | "flip" | "shake";
-
-    export let animationType: string;
+    export let animationType: eva.AnimationType;
     export let icon: string;
     export let width: string | number = 30;
     export let height: string | number = 30;
