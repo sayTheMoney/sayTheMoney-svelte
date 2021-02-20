@@ -6,20 +6,25 @@
 	import Icon from "./Icon.svelte";
 	import Tooltip from "./Tooltip.svelte";
 
+	const MAX_VALUE = 9999_9999_9999;
+	const MIN_VALUE = 1
+
 	let money: number;
 	let audioContainer: HTMLElement;
 	let download: { link: string; name: string };
 	let audio: HTMLAudioElement;
 	let playing: boolean = false;
 
-	onMount(async () => {
+	$: money = Math.max(Math.min(money, MAX_VALUE), MIN_VALUE);
+	$: updateAudio(money)
+
+	onMount(() => {
 		randomize();
-		await updateAudio();
 	});
 
 	const randomize = () => {
 		money = Math.round(Math.random() * 999999999) / 100.0;
-	}
+	};
 
 	const removeAllChildren = (el: HTMLElement) => {
 		while (el.firstChild) {
@@ -27,7 +32,7 @@
 		}
 	};
 
-	const updateAudio = async () => {
+	const updateAudio = async (money: number):Promise<void> => {
 		const tokens = parse(money);
 		console.debug(tokens);
 		const merged = await merger.concat(
@@ -39,7 +44,7 @@
 		removeAllChildren(audioContainer);
 		download = {
 			link: url,
-			name: `alipay_${money.toFixed(2).replace('.', '_')}.mp3`,
+			name: `alipay_${money.toFixed(2).replace(".", "_")}.mp3`,
 		};
 		audioContainer.appendChild(element);
 		audio = element;
@@ -56,7 +61,6 @@
 			audio.pause();
 			audio.currentTime = 0;
 		} else {
-			await updateAudio();
 			audio.play();
 		}
 	};
@@ -64,7 +68,13 @@
 
 <main>
 	<div id="ui">
-		<input id="money-input" type="number" bind:value={money} />
+		<input
+			id="money-input"
+			type="number"
+			max={MAX_VALUE}
+			min={MIN_VALUE}
+			bind:value={money}
+		/>
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a on:click={randomize} href="#">
 			<span>
