@@ -13,7 +13,8 @@
   },
   "precommit": [
     "precommit-msg",
-    "coverage"
+    "validate",
+    "coverage"    
   ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
